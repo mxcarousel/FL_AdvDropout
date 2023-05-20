@@ -20,11 +20,11 @@ Before the executions of the actual experiments, we need to partition the global
 Below is an example to launch the data generation script.
 
 ```bash
-python -m gen_data --dataset cifar10 --balanced 1 \
-										--M 100 --alpha 0.1 --beta 1 \ 
-										--iid 0 --train_num 50000 \ 
-										--test_num 10000 --class_num 10 \
-										--save 1 --seed1 777 --seed2 777
+python -m gen_data --dataset cifar10 --balanced 1 
+					--M 100 --alpha 0.1 --beta 1 
+					--iid 0 --train_num 50000 
+					--test_num 10000 --class_num 10 
+					--save 1 --seed1 777 --seed2 777
 ```
 ***Explanation of arguments:***
 
@@ -55,8 +55,8 @@ Below is an example bash script for regular and shadow dataset partition generat
 # Regular dataset
 python -m gen_data --dataset cifar10 --balanced 1 --alpha 0.1
 # Shadow dataset
-python -m gen_data --dataset cifar10 --balanced 1 --alpha 0.1 \
-										--seed1 456
+python -m gen_data --dataset cifar10 --balanced 1 --alpha 0.1 
+					--seed1 456
 ```
 
 On the other hand, choosing different ```seed2``` while keeping ```seed1``` as the same yields different realizations of the same non-IID distribution of synthetic dataset. 
@@ -65,11 +65,11 @@ We also give an example on synthetic shadow dataset generation below.
 
 ```bash
 # Regular dataset
-python -m gen_data --dataset synthetic --balanced 0 \
-										--alpha 1 --beta 1
+python -m gen_data --dataset synthetic --balanced 0 
+					--alpha 1 --beta 1
 # Shadow dataset
-python -m gen_data --dataset synthetic --balanced 0 \
-										--alpha 1 --beta 1 --seed2 456
+python -m gen_data --dataset synthetic --balanced 0 
+					--alpha 1 --beta 1 --seed2 456
 ```
 
 #### (ii) Shadow executions
@@ -84,10 +84,10 @@ python -m gen_data --dataset synthetic --balanced 0 \
 python -m main --algorithm FedAvg --dataset cifar10 --seed1 456 --observation 1
 python -m main --algorithm cclip --dataset cifar10 --seed1 456 --observation 1
 ## alternatively, shadow example for synthetic
-python -m main --algorithm FedAvg --dataset synthetic --alpha 1 --seed1 456 \
-								--observation 1
-python -m main --algorithm cclip --dataset synthetic --alpha 1 --seed1 456 \
-								--observation 1
+python -m main --algorithm FedAvg --dataset synthetic --alpha 1 --seed1 456
+				--observation 1
+python -m main --algorithm cclip --dataset synthetic --alpha 1 --seed1 456 
+				--observation 1
 
 # Then collect the sorted client index from the files:
 python -m gen_shadow --observation 1 --intermediate 1 --algorithm FedAvg --T1 5 --T2 150
@@ -105,12 +105,12 @@ The experiment execution on Assumption 2 is a bit different from the paper. In p
 However, they are still equivalent by manipulating $\epsilon$. For example, $\epsilon = 0.9$ in the below code is equivalent to $\epsilon = 0.8 $ in the paper under balanced local datasets.
 
 ```bash
-python -m main --dataset cifar10 --verbose 0 --print_every 1 \
-								--observation 0 --threshold_l 0,5,150 --epsilon 0.9 \
-								--alpha 0.1 --beta 1 --iid 0 --balanced 1 \
-								--algorithm FedAvg --bs 100 --lr 0.1 --lr_decay 1 \
-								--global_round 2000 --local_round 25 --K 10 \
-								--M 100 --mu 0.1 --seed 777 --seed1 777 --seed2 777 \
+python -m main --dataset cifar10 --verbose 0 --print_every 1 
+				--observation 0 --threshold_l 0,5,150 --epsilon 0.9 
+				--alpha 0.1 --beta 1 --iid 0 --balanced 1 
+				--algorithm FedAvg --bs 100 --lr 0.1 --lr_decay 1 
+				--global_round 2000 --local_round 25 --K 10 
+				--M 100 --mu 0.1 --seed 777 --seed1 777 --seed2 777 
                 --Beta 10.
 ```
 Some of the arguments are the same with the ones in data generation; however, for a clear and coherent presentation, we also reintroduce them here.
