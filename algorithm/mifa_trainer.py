@@ -3,7 +3,7 @@ from tqdm import tqdm
 
 class mifa_trainer(trainer_base):
     def train(self):
-        # self.seed_init()
+        self.seed_init()
         for round in tqdm(range(self.global_round)):
             self.lr_update(round)
             # form \cal{S} tilde
